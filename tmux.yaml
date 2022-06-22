@@ -1,4 +1,0 @@
----
-- hosts: all, !desktop
-  roles:
-    - { role: config_tmux, tags: [ 'config_tmux' ]}
