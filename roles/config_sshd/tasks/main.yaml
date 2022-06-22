@@ -1,0 +1,33 @@
+- name:
+  include_role:
+    name: transfer_keys
+
+- name: ensure sshd_config.d exists
+  become: yes
+  file:
+    path: /etc/ssh/sshd_config.d
+    state: directory
+
+- name: enable inclusion of .d configs
+  become: yes
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^Include'
+    line: 'Include /etc/ssh/sshd_config.d/*.conf'
+    insertbefore: BOF
+
+- name: deploy config from template
+  become: yes
+  ansible.builtin.template:
+    src: orcher.conf.j2
+    dest: /etc/ssh/sshd_config.d/orcher.conf
+    mode: '0644'
+
+- name: enable sshd.service
+  become: yes
+  systemd:
+    enabled: yes
+    state: started
+    name: sshd
+
+

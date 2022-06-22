@@ -1,0 +1,16 @@
+- name: ensure pacman-contrib is installed
+  become: yes
+  community.general.pacman:
+    name: pacman-contrib
+    state: present
+
+- name: check if candidates are available for removal
+  changed_when: false
+  shell: paccache --dry --keep 3 
+  register: paccache_result
+
+- name: clear pacman cache, keeping 3 most recent pkg archives
+  when: paccache_result.stdout.find('no candidate') == -1
+  changed_when: false
+  become: yes
+  shell: paccache --remove --keep 3 --quiet

@@ -1,0 +1,19 @@
+- name: check for orphaned packages
+  shell: pacman --query --unrequired --deps --quiet
+  register: orph_list
+  changed_when: False 
+  failed_when: "orph_list.rc not in [ 0, 1 ]"
+
+- name: print orph_list
+  when: orph_list.stdout != ""
+  debug:
+    msg: '{{ orph_list.stdout_lines }}'
+    verbosity: 1
+
+- name: remove orphaned packages
+  when: orph_list.rc == 0
+  become: yes
+  community.general.pacman:
+    name: '{{ orph_list.stdout_lines }}'
+    state: absent
+    extra_args: --recursive

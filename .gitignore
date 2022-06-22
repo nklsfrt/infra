@@ -1,0 +1,5 @@
+cache/
+roles/example/
+.vscode/
+layout.md
+host_vars/

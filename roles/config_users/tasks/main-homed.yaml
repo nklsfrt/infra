@@ -1,0 +1,14 @@
+- name: ensure systemd-homed is enabled and running
+  become: yes
+  systemd:
+    name: systemd-homed
+    enabled: yes
+    state: started
+
+- name: initialize systemd-homed managed users
+  become: yes
+  community.general.homectl:
+    name: orcher
+    password: "{{ ansible_password }}"
+    state: present
+    sshkeys: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGvAJm/S7F8FJj5veaT1lqN+3+/etph6BriSxYPzzQAe nase@timber"

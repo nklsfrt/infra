@@ -1,0 +1,9 @@
+- name: transfer local key to hosts
+  become: yes
+  authorized_key:
+    user: orcher
+    state: present
+    key: '{{ item }}'
+  with_file:
+    - /home/nase/.ssh/morschesholz.pub
+    - /home/nase/.ssh/redmi.pub

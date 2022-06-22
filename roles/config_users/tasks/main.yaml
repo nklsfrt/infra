@@ -1,0 +1,11 @@
+- name: print pass
+  debug:
+    var: orcher_password
+
+- name: ensure user orcher exists
+  become: yes
+  user:
+    name: orcher
+    password: "{{ orcher_password | string |  password_hash('sha512') }}"
+    groups: 'admin'
+    state: present

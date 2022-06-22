@@ -1,0 +1,7 @@
+- name: add admin group to sudoers
+  become: yes
+  community.general.sudoers:
+    name: admins
+    state: present
+    group: admin
+    commands: ALL

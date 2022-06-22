@@ -1,0 +1,20 @@
+---
+all:
+  hosts:
+    timber:
+      ansible_connection: local
+    testing:
+      ansible_host: 65.21.188.137 # Hetzner VPS
+    cloud:
+      ansible_host: 157.90.230.62 # nklsfrt.de
+    neumann:
+      ansible_host: 65.109.11.1 # Hetzner VPS 2
+  children:
+    desktop:
+      hosts:  
+        timber:
+    webserver:
+      hosts:
+        testing:
+        cloud:
+    vm:
