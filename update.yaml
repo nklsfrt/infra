@@ -1,14 +1,19 @@
 - name: Update all servers
   hosts: webserver, timber
   tasks:
+
   - name: Sync pacman cache and upgrade packages
     become: yes
     community.general.pacman:
       update_cache: yes
       upgrade: yes
+    register: out
+    changed_when: '"Nothing to upgrade" not in out.msg'
+
   - name: Remove orphaned packages
     include_role:
       name: rm_orphans
+      
   - name: Clear pacman cache
     include_role:
       name: rm_paccache
