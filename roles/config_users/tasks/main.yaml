@@ -2,6 +2,14 @@
   become: yes
   user:
     name: orcher
-    password: "{{ orcher_password | string |  password_hash('sha512') }}"
+    password: "{{ orcher_password | string | password_hash('sha512') }}"
+    groups: 'admin'
+    state: present
+
+- name: ensure user nase exists
+  become: yes
+  user:
+    name: nase
+    password: "{{ nase_password | string | password_hash('sha512') }}"
     groups: 'admin'
     state: present

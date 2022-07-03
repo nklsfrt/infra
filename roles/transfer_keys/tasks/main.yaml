@@ -3,6 +3,16 @@
   authorized_key:
     user: orcher
     state: present
+    exclusive: yes
+    key: '{{ item }}'
+  with_file:
+    - /home/nase/.ssh/ansiblecontrol.pub
+
+- name: transfer key for user nase
+  become: yes
+  authorized_key:
+    user: nase
+    state: present
     key: '{{ item }}'
   with_file:
     - /home/nase/.ssh/morschesholz.pub
