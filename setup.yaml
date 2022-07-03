@@ -4,4 +4,3 @@
     - { role: config_users, tags: [ 'config_users' ]}
     - { role: config_sudo, tags: [ 'config_sudo' ]}
     - { role: config_sshd, tags: [ 'config_sshd' ]}
-    - { role: config_tmux, tags: [ 'config_tmux' ]}
